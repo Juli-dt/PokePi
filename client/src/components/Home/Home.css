@@ -1,0 +1,41 @@
+.logo {
+  width: 240px;
+  filter: drop-shadow(0 0 8px white);
+  margin: 50px;
+}
+
+.buttonDetalles {
+  background-color: black;
+  color: white;
+  padding: 7px 40px;
+  margin: 20px 0;
+  border: 1px solid white;
+  border-radius: 7px;
+  justify-content: center;
+  cursor: pointer;
+  width: 20%;
+  font-size: 15px;
+  text-align: center;
+}
+
+.barras {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  height: 28px;
+  border: 4px;
+  border-radius: 7px;
+  background-color: black;
+  color: white;
+  width: 13%;
+  border: 1px solid rgb(255, 255, 255);
+  text-align: center;
+  cursor: pointer;
+}
+
+.body2 {
+  background-image: url(https://i.pinimg.com/originals/cd/fa/43/cdfa4305cde7963fa700bbf8a221c5aa.png);
+  height: 230vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,60 @@
+.logo {
+  width: 240px;
+  filter: drop-shadow(0 0 8px white);
+  margin: 50px;
+  margin-right: 30px;
+}
+.buttonCreate {
+  background-color: rgb(0, 0, 0);
+  border: 1px solid white;
+  color: white;
+  padding: 7px 120px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 7px;
+  margin-top: 10px;
+}
+
+.body4 {
+  background-image: url(https://gameranx.com/wp-content/uploads/2016/07/Pokemon-GO-720P-Wallpaper-1.jpg);
+  height: 130vh;
+  background-size: cover;
+}
+
+.label {
+  width: 180px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background: none;
+  margin: 8px;
+  color: black;
+  background-color: white;
+}
+
+.fontLabel {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(255, 238, 0);
+}
+
+.createPokemon {
+  background-color: rgba(0, 0, 0, 0.401);
+  border: 3px solid rgb(255, 255, 255);
+  color: rgb(255, 238, 0);
+  font-size: 35px;
+  width: 350px;
+  align-self: center;
+  align-items: center;
+  margin-left: 600px;
+  border-radius: 10px;
+}
+
+.typesLabel {
+  width: 180px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 8px;
+}

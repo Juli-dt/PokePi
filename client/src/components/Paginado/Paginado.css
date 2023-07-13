@@ -1,0 +1,25 @@
+.pagination {
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0);
+  width: 50%;
+  align-self: center;
+  margin-left: 375px;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.item button:hover {
+  cursor: pointer;
+  font-size: 130%;
+  text-shadow: 0 0 5px rgb(226, 44, 44);
+}
