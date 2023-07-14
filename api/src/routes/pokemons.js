@@ -8,6 +8,7 @@ const {
   getDbPokemonById,
   createPokemon,
   deletePokemon,
+  ultimateByName
 } = require("./functions");
 
 const router = Router();
@@ -18,10 +19,12 @@ router.get("/", async (req, res) => {
     if (name) {
       const lowerName = name.toLowerCase();
       const apiPokeByName = await getApiPokemonByName(lowerName);
-      if (!apiPokeByName) {
+      if (apiPokeByName === false) {
         const dbPokeByName = await getDbPokemonByName(lowerName);
-        if (!dbPokeByName) {
-          // console.log(dbPokeByName);
+        console.log(dbPokeByName);
+        // res.status(200).json(dbPokeByName)
+        if (dbPokeByName === false) {
+          console.log(dbPokeByName);
           res.status(404).send("Not found");
         } else res.json(dbPokeByName);
       } else res.json(apiPokeByName);
@@ -53,7 +56,7 @@ router.get("/:idPokemon", async (req, res) => {
   }
 });
 
-router.post("/pokecreate", async (req, res) => {
+router.post("/", async (req, res) => {
   const { name, types, hp, attack, defense, speed, height, weight, image } =
     req.body;
   const pokemon = await createPokemon(
@@ -70,7 +73,6 @@ router.post("/pokecreate", async (req, res) => {
   
     res.json(pokemon);
 });
-
 router.delete("/:pokeId", async (req, res) => {
   const { pokeId } = req.params;
   const deleted = deletePokemon(pokeId);

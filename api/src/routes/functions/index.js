@@ -77,6 +77,7 @@ module.exports = {
       );
       const pokemon = foundPokemon.data;
       const pokeName = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+      console.log(pokeName);
       const types = pokemon.types.map(
         (e) => e.type.name[0].toUpperCase() + e.type.name.slice(1)
       );
@@ -90,36 +91,58 @@ module.exports = {
         },
       ];
     } catch (e) {
-      console.log();
-      // return ("Not found :(")    
+      // console.log(e);
+      return (false)
     }
   },
   getDbPokemonByName: async (name) => {
     try {
-      const foundPokemon = await Pokemon.findAll({
-        where: {
-          name,
-        },
-        include: {
-          model: Type,
-          attributes: ["name"],
-          through: {
-            attributes: [],
-          },
-        },
-        attributes: ["id", "name", "attack", "image"],
-      });
-      return foundPokemon.map((e) => ({
-        id: e.id,
-        name: e.name,
-        image: e.image,
-        types: e.types.map((e) => e.name[0].toUpperCase() + e.name.slice(1)),
-        attack: e.attack,
-      }));
+      console.log(name);
+      const foundPokemon = await Pokemon.findAll()
+      if (foundPokemon.length > 0) {
+        const idk = foundPokemon.filter((pokemon) => pokemon.dataValues.name == name)
+        if (idk.length > 0) {
+          // console.log(idk[0].dataValues);
+          const thepoke = idk[0].dataValues
+          const pokefound = {
+            id: thepoke.id,
+            name: thepoke.name,
+            hp: thepoke.hp,
+            attack: thepoke.attack,
+            defense: thepoke.defense,
+            speed: thepoke.speed,
+            height: thepoke.height,
+            weight: thepoke.weight,
+            image: thepoke.image
+          }
+          return pokefound
+        }else{
+          return false
+        }
+      }else{
+        return false}
     } catch (e) {
-      console.log(e)
-      // return ("Not found :(")
+      console.log(e.message)
+      return (false)
+      // console.log(getDbPokemonByName("juancho"));
     }
+  },
+
+  ultimateByName: async (name) => {
+    try {
+      const inApi = await this.getApiPokemonByName(name);
+
+      if (inApi == "Not found :(") {
+        const inDB = await this.getDbPokemonByName(name);
+        return inDB
+      } else {
+        return inApi
+      }
+    }
+    catch (e) {
+      console.log(e);
+    }
+
   },
   getApiPokemonById: async (id) => {
     try {
@@ -183,47 +206,47 @@ module.exports = {
     height,
     weight,
     type
-) => {
-  console.log(name)
+  ) => {
+    console.log(name)
     name = name.toLowerCase();
 
     const existingPokemonDB = await Pokemon.findOne({ where: { name } });
     if (existingPokemonDB) {
-        throw new Error("The Pokemon already exists in the database");
+      throw new Error("The Pokemon already exists in the database");
     }
 
     try {
-        const existingPokemonApi = await axios.get(
-            `https://pokeapi.co/api/v2/pokemon/${name}`
-        );
-        console.log("existingPokemonApi: %o", existingPokemonApi.data);
-        throw new Error("The Pokemon already exists in the API");
+      const existingPokemonApi = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${name}`
+      );
+      console.log("existingPokemonApi: %o", existingPokemonApi.data);
+      throw new Error("The Pokemon already exists in the API");
     } catch (error) {
-        if (error.message === "The Pokemon already exists in the API") {
-            throw error;
-        } else if (error.response && error.response.status === 404) {
-            console.log("The Pokemon does not exist in the API");
-            const data = {
-                name,
-                image,
-                hp,
-                attack,
-                defense,
-                speed,
-                height,
-                weight,
-                type,
-            };
-            const createPoke = await Pokemon.create(data);
-            return createPoke;
-        } else {
-            console.error("Pokeapi API request failed:", error);
-            throw new Error(
-                "Failed to verify the existence of the Pokémon in the API"
-            );
-        }
+      if (error.message === "The Pokemon already exists in the API") {
+        throw error;
+      } else if (error.response && error.response.status === 404) {
+        console.log("The Pokemon does not exist in the API");
+        const data = {
+          name,
+          image,
+          hp,
+          attack,
+          defense,
+          speed,
+          height,
+          weight,
+          type,
+        };
+        const createPoke = await Pokemon.create(data);
+        return createPoke;
+      } else {
+        console.error("Pokeapi API request failed:", error);
+        throw new Error(
+          "Failed to verify the existence of the Pokémon in the API"
+        );
+      }
     }
-},
+  },
   deletePokemon: async (id) => {
     Pokemon.destroy({
       where: {
